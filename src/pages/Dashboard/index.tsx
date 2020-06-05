@@ -68,7 +68,7 @@ const Dashboard: React.FC = () => {
     const { description, image, name, price } = food;
     const { id, available } = editingFood;
 
-    const valor = await api.put('foods', {
+    const valor = await api.put(`foods/${id}`, {
       id,
       available,
       description,
@@ -76,6 +76,10 @@ const Dashboard: React.FC = () => {
       name,
       price,
     });
+
+    setFoods(
+      foods.map(mapFood => (mapFood.id === id ? { ...valor.data } : mapFood)),
+    );
   }
 
   async function handleDeleteFood(id: number): Promise<void> {
